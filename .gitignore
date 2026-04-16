@@ -1,0 +1,72 @@
+# =========================
+# Dependências
+# =========================
+/vendor/
+/node_modules/
+
+# =========================
+# Build / artefatos
+# =========================
+/public/assets/
+/dist/
+/build/
+/.vite/
+/*.tsbuildinfo
+
+# =========================
+# Ambiente local e segredos
+# =========================
+/.env
+/.env.local
+/.env.*.local
+/.env.production
+/.env.staging
+/.env.test
+/.env.backup
+/.env.bak
+
+# =========================
+# Logs e cache
+# =========================
+*.log
+/logs/
+/storage/logs/
+/storage/cache/
+/storage/framework/
+/storage/tmp/
+/storage/uploads/
+/.phpunit.result.cache
+
+# =========================
+# Arquivos de runtime
+# =========================
+/storage/installed.lock
+/.pid
+*.pid
+*.seed
+*.stackdump
+
+# =========================
+# Sistema operacional / IDE
+# =========================
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# =========================
+# Testes e cobertura
+# =========================
+/coverage/
+/tests/_output/
+.php-cs-fixer.cache
+.phpstan.cache
+
+# =========================
+# Docker temporário
+# =========================
+docker-compose.override.yml
+
