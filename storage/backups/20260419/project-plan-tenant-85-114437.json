@@ -1,0 +1,66 @@
+{
+    "tenant_id": 85,
+    "context": "project-plan",
+    "generated_at": "2026-04-19T11:44:37-04:00",
+    "payload": {
+        "project_id": 376,
+        "client_id": 370,
+        "contract_value": 12000,
+        "installments": [
+            {
+                "installment_type": "entry",
+                "installment_number": 0,
+                "due_date": "2026-05-10",
+                "reference_month": 5,
+                "reference_year": 2026,
+                "amount_total": 2000,
+                "label": "Entrada"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 1,
+                "due_date": "2026-05-10",
+                "reference_month": 5,
+                "reference_year": 2026,
+                "amount_total": 2000,
+                "label": "Parcela 1"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 2,
+                "due_date": "2026-06-10",
+                "reference_month": 6,
+                "reference_year": 2026,
+                "amount_total": 2000,
+                "label": "Parcela 2"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 3,
+                "due_date": "2026-07-10",
+                "reference_month": 7,
+                "reference_year": 2026,
+                "amount_total": 2000,
+                "label": "Parcela 3"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 4,
+                "due_date": "2026-08-10",
+                "reference_month": 8,
+                "reference_year": 2026,
+                "amount_total": 2000,
+                "label": "Parcela 4"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 5,
+                "due_date": "2026-09-10",
+                "reference_month": 9,
+                "reference_year": 2026,
+                "amount_total": 2000,
+                "label": "Parcela 5"
+            }
+        ]
+    }
+}

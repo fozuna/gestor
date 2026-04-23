@@ -1,0 +1,30 @@
+{
+    "tenant_id": 1,
+    "context": "project-plan",
+    "generated_at": "2026-04-14T22:34:23+02:00",
+    "payload": {
+        "project_id": 88,
+        "client_id": 86,
+        "contract_value": 2800,
+        "installments": [
+            {
+                "installment_type": "entry",
+                "installment_number": 0,
+                "due_date": "2026-05-10",
+                "reference_month": 5,
+                "reference_year": 2026,
+                "amount_total": 1400,
+                "label": "Entrada"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 1,
+                "due_date": "2026-05-10",
+                "reference_month": 5,
+                "reference_year": 2026,
+                "amount_total": 1400,
+                "label": "Parcela 1"
+            }
+        ]
+    }
+}

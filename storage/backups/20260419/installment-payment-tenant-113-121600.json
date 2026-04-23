@@ -1,0 +1,41 @@
+{
+    "tenant_id": 113,
+    "context": "installment-payment",
+    "generated_at": "2026-04-19T12:16:00-04:00",
+    "payload": {
+        "invoice_id": 602,
+        "payment_id": 120,
+        "receipt_number": "44143005",
+        "receipt_path": "storage/recibos/20260419/tenant-113/recibo-120.pdf",
+        "amount_paid": 350,
+        "payment_date": "2026-04-10",
+        "payment_method": "pix",
+        "invoice": {
+            "id": 602,
+            "tenant_id": 113,
+            "client_id": 441,
+            "project_id": 443,
+            "quote_id": null,
+            "code": "FIN-RCB-001",
+            "description": "Parcela mensal",
+            "amount_total": "350.00",
+            "amount_paid": "0.00",
+            "status": "overdue",
+            "installment_type": "monthly",
+            "installment_number": 1,
+            "reference_month": 4,
+            "reference_year": 2026,
+            "source_task_id": null,
+            "payment_terms": null,
+            "due_date": "2026-04-10",
+            "paid_at": null,
+            "created_by_user_id": null,
+            "created_at": "2026-04-19 12:15:55",
+            "updated_at": "2026-04-19 12:15:55",
+            "computed_status": "overdue",
+            "client_name": "Cliente Recibo",
+            "project_name": "Projeto Recibo"
+        },
+        "current_paid_total": 350
+    }
+}

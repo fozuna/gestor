@@ -1,0 +1,10 @@
+{
+    "generated_at": "2026-04-15T15:32:43+02:00",
+    "records": {
+        "invoices_orphan_project": [],
+        "payments_orphan_invoice": [],
+        "financial_entries_orphan_project": [],
+        "financial_entries_orphan_invoice": [],
+        "installment_plans_orphan_project": []
+    }
+}

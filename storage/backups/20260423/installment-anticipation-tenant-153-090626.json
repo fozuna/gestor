@@ -1,0 +1,57 @@
+{
+    "tenant_id": 153,
+    "context": "installment-anticipation",
+    "generated_at": "2026-04-23T09:06:26-04:00",
+    "payload": {
+        "anticipation_id": 1,
+        "simulation": {
+            "selected_count": 2,
+            "base_amount": 700,
+            "adjustment_mode": "discount",
+            "adjustment_rate": 10,
+            "adjustment_amount": -70,
+            "total_amount": 630,
+            "items": [
+                {
+                    "invoice_id": 819,
+                    "code": "FIN-ANT-001",
+                    "description": "Parcela mensal",
+                    "client_name": "Cliente Antecipacao",
+                    "project_name": "Projeto Antecipacao",
+                    "due_date": "2099-01-10",
+                    "original_amount_total": 300,
+                    "original_amount_paid": 0,
+                    "settled_amount": 300,
+                    "adjustment_amount": -30,
+                    "payment_amount": 270
+                },
+                {
+                    "invoice_id": 820,
+                    "code": "FIN-ANT-002",
+                    "description": "Parcela mensal",
+                    "client_name": "Cliente Antecipacao",
+                    "project_name": "Projeto Antecipacao",
+                    "due_date": "2099-02-10",
+                    "original_amount_total": 400,
+                    "original_amount_paid": 0,
+                    "settled_amount": 400,
+                    "adjustment_amount": -40,
+                    "payment_amount": 360
+                }
+            ],
+            "client_id": 559,
+            "project_id": 558,
+            "payment_date": "2026-04-23",
+            "payment_method": "pix",
+            "note": "Quitacao antecipada"
+        },
+        "payment_ids": [
+            148,
+            149
+        ],
+        "receipt_numbers": [
+            "55958005",
+            "55958006"
+        ]
+    }
+}

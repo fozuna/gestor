@@ -1,0 +1,21 @@
+{
+    "tenant_id": 1,
+    "context": "project-plan",
+    "generated_at": "2026-04-17T10:14:19-04:00",
+    "payload": {
+        "project_id": 298,
+        "client_id": 86,
+        "contract_value": 890,
+        "installments": [
+            {
+                "installment_type": "monthly",
+                "installment_number": 1,
+                "due_date": "2026-03-20",
+                "reference_month": 3,
+                "reference_year": 2026,
+                "amount_total": 890,
+                "label": "Parcela 1"
+            }
+        ]
+    }
+}

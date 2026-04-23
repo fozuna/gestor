@@ -1,0 +1,41 @@
+{
+    "tenant_id": 1,
+    "context": "installment-payment",
+    "generated_at": "2026-04-17T11:55:52-04:00",
+    "payload": {
+        "invoice_id": 347,
+        "payment_id": 74,
+        "receipt_number": "08698004",
+        "receipt_path": "storage/recibos/20260417/tenant-1/recibo-74.pdf",
+        "amount_paid": 890,
+        "payment_date": "2026-03-20",
+        "payment_method": "pix",
+        "invoice": {
+            "id": 347,
+            "tenant_id": 1,
+            "client_id": 86,
+            "project_id": 298,
+            "quote_id": null,
+            "code": "PRJ-298-MON-01",
+            "description": "Parcela 1 · Sistema de controle de recrutamento e seleção",
+            "amount_total": "890.00",
+            "amount_paid": "0.00",
+            "status": "overdue",
+            "installment_type": "monthly",
+            "installment_number": 1,
+            "reference_month": 3,
+            "reference_year": 2026,
+            "source_task_id": null,
+            "payment_terms": "A vista",
+            "due_date": "2026-03-20",
+            "paid_at": null,
+            "created_by_user_id": 1,
+            "created_at": "2026-04-17 10:14:19",
+            "updated_at": "2026-04-17 10:14:19",
+            "computed_status": "overdue",
+            "client_name": "CT Price - Organização Contábil",
+            "project_name": "Sistema de controle de recrutamento e seleção"
+        },
+        "current_paid_total": 890
+    }
+}

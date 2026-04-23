@@ -1,0 +1,40 @@
+{
+    "tenant_id": 1,
+    "generated_at": "2026-04-11T01:14:18+02:00",
+    "tables": {
+        "clients": [
+            {
+                "id": 1,
+                "tenant_id": 1,
+                "name": "Cliente E2E",
+                "legal_name": null,
+                "document_number": null,
+                "email": "cliente-e2e@traxter.com",
+                "phone": null,
+                "status": "active",
+                "notes": null,
+                "created_at": "2026-04-10 14:44:22",
+                "updated_at": "2026-04-10 14:44:22"
+            },
+            {
+                "id": 2,
+                "tenant_id": 1,
+                "name": "Doná Consultorias",
+                "legal_name": null,
+                "document_number": null,
+                "email": "alex.dona.consultoria@gmail.com",
+                "phone": "67981524635",
+                "status": "active",
+                "notes": "Sis Doná, sistema voltado para a gestão dos clientes e tarefas",
+                "created_at": "2026-04-10 15:40:39",
+                "updated_at": "2026-04-10 15:40:39"
+            }
+        ],
+        "projects": [],
+        "tasks": [],
+        "invoices": [],
+        "payments": [],
+        "financial_entries": [],
+        "action_logs": []
+    }
+}

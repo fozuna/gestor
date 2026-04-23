@@ -27,5 +27,11 @@
     "migrate-db": "php bin/migrate.php",
     "backup-db": "php bin/backup.php",
     "test": "phpunit --configuration phpunit.xml"
+  },
+  "config": {
+  "platform": {
+    "php": "8.2.30"
   }
+}
+
 }

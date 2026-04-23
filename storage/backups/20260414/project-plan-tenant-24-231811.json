@@ -1,0 +1,129 @@
+{
+    "tenant_id": 24,
+    "context": "project-plan",
+    "generated_at": "2026-04-14T23:18:11+02:00",
+    "payload": {
+        "project_id": 178,
+        "client_id": 173,
+        "contract_value": 8000,
+        "installments": [
+            {
+                "installment_type": "entry",
+                "installment_number": 0,
+                "due_date": "2025-12-14",
+                "reference_month": 12,
+                "reference_year": 2025,
+                "amount_total": 2000,
+                "label": "Entrada"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 1,
+                "due_date": "2025-12-14",
+                "reference_month": 12,
+                "reference_year": 2025,
+                "amount_total": 500,
+                "label": "Parcela 1"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 2,
+                "due_date": "2026-01-14",
+                "reference_month": 1,
+                "reference_year": 2026,
+                "amount_total": 500,
+                "label": "Parcela 2"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 3,
+                "due_date": "2026-02-14",
+                "reference_month": 2,
+                "reference_year": 2026,
+                "amount_total": 500,
+                "label": "Parcela 3"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 4,
+                "due_date": "2026-03-14",
+                "reference_month": 3,
+                "reference_year": 2026,
+                "amount_total": 500,
+                "label": "Parcela 4"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 5,
+                "due_date": "2026-04-14",
+                "reference_month": 4,
+                "reference_year": 2026,
+                "amount_total": 500,
+                "label": "Parcela 5"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 6,
+                "due_date": "2026-05-14",
+                "reference_month": 5,
+                "reference_year": 2026,
+                "amount_total": 500,
+                "label": "Parcela 6"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 7,
+                "due_date": "2026-06-14",
+                "reference_month": 6,
+                "reference_year": 2026,
+                "amount_total": 500,
+                "label": "Parcela 7"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 8,
+                "due_date": "2026-07-14",
+                "reference_month": 7,
+                "reference_year": 2026,
+                "amount_total": 500,
+                "label": "Parcela 8"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 9,
+                "due_date": "2026-08-14",
+                "reference_month": 8,
+                "reference_year": 2026,
+                "amount_total": 500,
+                "label": "Parcela 9"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 10,
+                "due_date": "2026-09-14",
+                "reference_month": 9,
+                "reference_year": 2026,
+                "amount_total": 500,
+                "label": "Parcela 10"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 11,
+                "due_date": "2026-10-14",
+                "reference_month": 10,
+                "reference_year": 2026,
+                "amount_total": 500,
+                "label": "Parcela 11"
+            },
+            {
+                "installment_type": "monthly",
+                "installment_number": 12,
+                "due_date": "2026-11-14",
+                "reference_month": 11,
+                "reference_year": 2026,
+                "amount_total": 500,
+                "label": "Parcela 12"
+            }
+        ]
+    }
+}

@@ -1,0 +1,25 @@
+{
+    "tenant_id": 123,
+    "context": "installment-plan",
+    "generated_at": "2026-04-19T12:37:45-04:00",
+    "payload": {
+        "plan_id": 1,
+        "project_id": 472,
+        "client_id": 471,
+        "values": {
+            "total_value": 1000,
+            "entry_value": null,
+            "remaining_balance": 1000,
+            "installments_count": 4,
+            "installment_value": 250
+        },
+        "entry_date": null,
+        "first_installment_date": "2026-05-01",
+        "invoices": [
+            656,
+            657,
+            658,
+            659
+        ]
+    }
+}
