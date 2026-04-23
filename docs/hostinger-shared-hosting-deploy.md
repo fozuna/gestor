@@ -11,6 +11,28 @@
 - Sem `index.php` e sem regras de rewrite adequadas na raiz pública, o Apache tenta abrir diretório ou bloqueia o acesso.
 - Regras faltantes ou incorretas no `.htaccess` também podem provocar `403`.
 
+## Fluxo do redirecionamento para `/install`
+- O redirecionamento para `/install` acontece em `AuthController::loginView`.
+- Ele ocorre quando `Installer::status()['installed']` retorna `false`.
+- Isso nao representa checagem de licenca; e uma verificacao de instalacao/ambiente.
+
+### Condicoes que disparam o redirect
+- arquivo `.env` ausente
+- `.env` incompleto para banco
+- banco inacessivel
+- tabelas-base ausentes: `users`, `tenants`, `memberships`, `settings`
+
+### Logs de diagnostico
+- Arquivo: `storage/logs/install-redirect-YYYYMMDD.log`
+- O log grava:
+  - origem do redirect
+  - URL e query string
+  - metodo HTTP
+  - sessao
+  - cookies
+  - stack trace
+  - status detalhado do instalador
+
 ## Solução aplicada
 - `index.php` na raiz para fallback quando o projeto inteiro fica dentro de `public_html`.
 - `.htaccess` na raiz com:

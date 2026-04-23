@@ -10,20 +10,36 @@ final class Installer
 {
     public static function installed(): bool
     {
-        if (is_file(self::lockPath())) {
-            return true;
+        return (bool)(self::status()['installed'] ?? false);
+    }
+
+    public static function status(): array
+    {
+        $lockExists = is_file(self::lockPath());
+        $envPath = dirname(__DIR__, 2) . '/.env';
+        $envExists = is_file($envPath);
+        $storageDir = dirname(__DIR__, 2) . '/storage';
+        $storageWritable = is_dir($storageDir) && is_writable($storageDir);
+        $envConfigured = self::hasConfiguredEnvironment();
+
+        $database = self::databaseStatus();
+        $installed = $lockExists || ($envConfigured && (bool)$database['ok']);
+
+        if ($installed && !$lockExists) {
+            self::lockSilently();
+            $lockExists = is_file(self::lockPath());
         }
 
-        if (!self::hasConfiguredEnvironment()) {
-            return false;
-        }
-
-        if (!self::databaseLooksInstalled()) {
-            return false;
-        }
-
-        self::lockSilently();
-        return true;
+        return [
+            'installed' => $installed,
+            'reason' => self::buildReason($lockExists, $envExists, $envConfigured, (bool)$database['ok']),
+            'lock_exists' => $lockExists,
+            'lock_path' => self::lockPath(),
+            'env_exists' => $envExists,
+            'env_configured' => $envConfigured,
+            'storage_writable' => $storageWritable,
+            'database' => $database,
+        ];
     }
 
     public static function lock(): void
@@ -55,12 +71,19 @@ final class Installer
         return $dbHost !== '' && $dbPort !== '' && $dbName !== '' && $dbUser !== '';
     }
 
-    private static function databaseLooksInstalled(): bool
+    private static function databaseStatus(): array
     {
         try {
             $cfg = Config::get('database');
             if (($cfg['dsn'] ?? '') === '' || ($cfg['user'] ?? '') === '') {
-                return false;
+                return [
+                    'ok' => false,
+                    'connected' => false,
+                    'required_tables' => ['users', 'tenants', 'memberships', 'settings'],
+                    'existing_tables' => [],
+                    'missing_tables' => ['users', 'tenants', 'memberships', 'settings'],
+                    'error' => 'DSN ou usuário do banco ausente.',
+                ];
             }
 
             $pdo = new PDO(
@@ -75,16 +98,47 @@ final class Installer
             $rows = $st ? $st->fetchAll(PDO::FETCH_COLUMN) : [];
             $existing = array_map('strval', is_array($rows) ? $rows : []);
 
-            foreach ($requiredTables as $table) {
-                if (!in_array($table, $existing, true)) {
-                    return false;
-                }
-            }
+            $missing = array_values(array_filter(
+                $requiredTables,
+                static fn(string $table): bool => !in_array($table, $existing, true)
+            ));
 
-            return true;
+            return [
+                'ok' => $missing === [],
+                'connected' => true,
+                'required_tables' => $requiredTables,
+                'existing_tables' => $existing,
+                'missing_tables' => $missing,
+                'error' => null,
+            ];
         } catch (Throwable) {
-            return false;
+            return [
+                'ok' => false,
+                'connected' => false,
+                'required_tables' => ['users', 'tenants', 'memberships', 'settings'],
+                'existing_tables' => [],
+                'missing_tables' => ['users', 'tenants', 'memberships', 'settings'],
+                'error' => 'Falha ao conectar no banco ou consultar o schema.',
+            ];
         }
+    }
+
+    private static function buildReason(bool $lockExists, bool $envExists, bool $envConfigured, bool $databaseOk): string
+    {
+        if ($lockExists) {
+            return 'lock';
+        }
+        if (!$envExists) {
+            return 'missing_env_file';
+        }
+        if (!$envConfigured) {
+            return 'incomplete_env';
+        }
+        if (!$databaseOk) {
+            return 'database_not_ready';
+        }
+
+        return 'database_autodetected';
     }
 
     private static function lockSilently(): void

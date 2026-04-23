@@ -7,6 +7,7 @@ use App\Core\Request;
 use App\Core\Response;
 use App\Core\View;
 use App\Helpers\CSRF;
+use App\Helpers\DiagnosticLogger;
 use App\Helpers\Flash;
 use App\Helpers\Installer;
 use App\Helpers\Security;
@@ -17,7 +18,15 @@ final class AuthController
 {
     public function loginView(Request $request): void
     {
-        if (!Installer::installed()) {
+        $installerStatus = Installer::status();
+        if (!(bool)($installerStatus['installed'] ?? false)) {
+            DiagnosticLogger::log('install-redirect', [
+                'target' => '/install',
+                'source' => 'AuthController::loginView',
+                'installer_status' => $installerStatus,
+                'context' => DiagnosticLogger::requestContext(),
+                'trace' => DiagnosticLogger::trace(),
+            ]);
             Response::redirect('/install');
             return;
         }

@@ -8,6 +8,7 @@ use App\Helpers\DB;
 
 $root = dirname(__DIR__);
 $checks = [];
+$status = Installer::status();
 
 $checks[] = ['.env', is_file($root . '/.env')];
 $checks[] = ['storage/', is_dir($root . '/storage')];
@@ -22,8 +23,20 @@ try {
     $checks[] = ['conexao banco', false];
 }
 
-$checks[] = ['installer instalado', Installer::installed()];
+$checks[] = ['installer instalado', (bool)($status['installed'] ?? false)];
 
 foreach ($checks as [$label, $ok]) {
     echo sprintf("[%s] %s\n", $ok ? 'OK' : 'FAIL', $label);
+}
+
+echo 'installer reason: ' . (string)($status['reason'] ?? 'unknown') . PHP_EOL;
+
+$database = is_array($status['database'] ?? null) ? $status['database'] : [];
+if (($database['error'] ?? null) !== null) {
+    echo 'database error: ' . (string)$database['error'] . PHP_EOL;
+}
+
+$missingTables = is_array($database['missing_tables'] ?? null) ? $database['missing_tables'] : [];
+if ($missingTables !== []) {
+    echo 'missing tables: ' . implode(', ', array_map('strval', $missingTables)) . PHP_EOL;
 }
