@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Helpers\Path;
 use App\Helpers\Security;
 use App\Repositories\FinanceRepository;
 use RuntimeException;
@@ -211,7 +212,7 @@ final class PaymentReceiptService
 
     private function projectRoot(): string
     {
-        return dirname(__DIR__, 2);
+        return Path::base();
     }
 
     private function paymentMethodLabel(string $method): string

@@ -16,9 +16,9 @@ final class Installer
     public static function status(): array
     {
         $lockExists = is_file(self::lockPath());
-        $envPath = dirname(__DIR__, 2) . '/.env';
+        $envPath = Path::base('.env');
         $envExists = is_file($envPath);
-        $storageDir = dirname(__DIR__, 2) . '/storage';
+        $storageDir = Path::storage();
         $storageWritable = is_dir($storageDir) && is_writable($storageDir);
         $envConfigured = self::hasConfiguredEnvironment();
 
@@ -53,12 +53,12 @@ final class Installer
 
     private static function lockPath(): string
     {
-        return dirname(__DIR__, 2) . '/storage/installed.lock';
+        return Path::storage('installed.lock');
     }
 
     private static function hasConfiguredEnvironment(): bool
     {
-        $envPath = dirname(__DIR__, 2) . '/.env';
+        $envPath = Path::base('.env');
         if (!is_file($envPath)) {
             return false;
         }

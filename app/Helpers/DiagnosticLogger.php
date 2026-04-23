@@ -7,7 +7,7 @@ final class DiagnosticLogger
 {
     public static function log(string $channel, array $payload): void
     {
-        $baseDir = dirname(__DIR__, 2) . '/storage/logs';
+        $baseDir = Path::storage('logs');
         if (!is_dir($baseDir) && !@mkdir($baseDir, 0775, true) && !is_dir($baseDir)) {
             error_log('[DiagnosticLogger] Nao foi possivel criar diretorio de logs: ' . $baseDir);
             return;
@@ -114,7 +114,7 @@ final class DiagnosticLogger
 
     private static function trimProjectRoot(string $path): string
     {
-        $root = str_replace('\\', '/', dirname(__DIR__, 2));
+        $root = str_replace('\\', '/', Path::base());
         $normalized = str_replace('\\', '/', $path);
         return str_starts_with($normalized, $root)
             ? ltrim(substr($normalized, strlen($root)), '/')

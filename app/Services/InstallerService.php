@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Helpers\Installer;
+use App\Helpers\Path;
 use PDO;
 use RuntimeException;
 
@@ -47,7 +48,7 @@ final class InstallerService
             'SESSION_SAMESITE=Lax',
             '',
         ];
-        $path = dirname(__DIR__, 2) . '/.env';
+        $path = Path::base('.env');
         file_put_contents($path, implode("\n", $lines));
     }
 
@@ -118,7 +119,7 @@ final class InstallerService
 
     public function runSchema(PDO $pdo): void
     {
-        $schemaPath = dirname(__DIR__, 2) . '/install/schema.sql';
+        $schemaPath = Path::base('install/schema.sql');
         $sql = (string)file_get_contents($schemaPath);
         foreach ($this->splitSql($sql) as $stmt) {
             $s = trim($stmt);

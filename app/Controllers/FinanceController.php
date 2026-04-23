@@ -8,7 +8,9 @@ use App\Core\Response;
 use App\Core\View;
 use App\Helpers\Flash;
 use App\Helpers\Security;
+use App\Helpers\Path;
 use App\Helpers\Session;
+use App\Services\FinanceService;
 use App\Services\FinanceService;
 use App\Services\AuditLogService;
 use App\Services\PaymentReceiptService;
@@ -180,7 +182,7 @@ final class FinanceController
                 throw new \RuntimeException('Caminho de recibo inválido.');
             }
 
-            $absolutePath = dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $normalized);
+            $absolutePath = Path::base(str_replace('/', DIRECTORY_SEPARATOR, $normalized));
             if (!is_file($absolutePath)) {
                 throw new \RuntimeException('Arquivo de recibo não encontrado em disco.');
             }

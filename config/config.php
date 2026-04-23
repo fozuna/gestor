@@ -1,0 +1,27 @@
+<?php
+declare(strict_types=1);
+
+return [
+    'app' => [
+        'name' => 'TRAXTER CRM',
+        'env' => 'production',
+        'url' => 'http://localhost',
+        'key' => '',
+        'timezone' => 'America/Campo_Grande',
+    ],
+    'database' => [
+        'host' => '127.0.0.1',
+        'port' => '3306',
+        'database' => '',
+        'username' => '',
+        'password' => '',
+    ],
+    'session' => [
+        'name' => 'traxter_session',
+        'secure' => false,
+        'samesite' => 'Lax',
+    ],
+    'receipts' => [
+        'renderer' => 'dompdf',
+    ],
+];

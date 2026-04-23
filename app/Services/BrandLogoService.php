@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Helpers\Path;
+
 final class BrandLogoService
 {
     private static array $webCache = [];
@@ -84,7 +86,7 @@ final class BrandLogoService
         if ($this->publicDir !== null && $this->publicDir !== '') {
             return rtrim($this->publicDir, '\\/');
         }
-        return dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'public';
+        return Path::public();
     }
 
     private function fileToDataUri(string $filePath): ?string
@@ -180,4 +182,3 @@ final class BrandLogoService
         return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
     }
 }
-

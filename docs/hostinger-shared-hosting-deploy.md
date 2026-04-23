@@ -41,7 +41,11 @@
   - fallback para `public/index.php`
   - bloqueio de arquivos sensíveis
 - `public/.htaccess` com front controller padrão.
-- Fallback do recibo para `Dompdf` quando não houver Node/Chrome no servidor.
+- Geração de recibos padronizada em `Dompdf`, sem `proc_open`, Node, Chrome ou binários do sistema.
+- Bootstrap central em `bootstrap/runtime.php` com suporte a:
+  - `.env`
+  - fallback via `config/config.php`
+  - timezone e paths centrais
 - O detector de instalação agora não depende só de `storage/installed.lock`:
   - se existir `.env` válido
   - se o banco responder
@@ -64,12 +68,16 @@ public_html/
     app.js
 
 private/
+  config/
+    app.php
+    config.php
+    database.php
+    session.php
   .env
   .env.example
   app/
   bin/
   bootstrap/
-  config/
   install/
   public/
     index.php
@@ -160,12 +168,28 @@ SESSION_SECURE=true
 RECEIPT_PDF_RENDERER=dompdf
 ```
 
+## Alternativa sem `.env`
+- Se a hospedagem falhar ao carregar `.env`, editar `private/config/config.php`.
+- O bootstrap usa `config/config.php` para preencher valores ausentes de:
+  - `APP_ENV`
+  - `APP_URL`
+  - `APP_KEY`
+  - banco
+  - sessão
+  - timezone
+
 ## Sem npm/composer no servidor
 - O pacote final já leva:
   - `vendor/`
   - `public_html/assets/`
   - `private/public/assets/`
 - Isso elimina dependência de build e instalação de dependências via SSH.
+- Em runtime, a aplicação não depende de:
+  - `npm`
+  - `node`
+  - `composer`
+  - `proc_open`
+  - binários do sistema
 
 ## Checklist final
 - `public_html/index.php` existe.
@@ -182,4 +206,4 @@ RECEIPT_PDF_RENDERER=dompdf
 
 ## Observações
 - Logos em `public/assets/images` são opcionais; se não existirem, o sistema usa fallback SVG.
-- Recibos PDF agora podem usar `Dompdf` por configuração, evitando dependência de Node/Chrome na hospedagem compartilhada.
+- Recibos PDF usam `Dompdf`, adequado para Apache compartilhado.

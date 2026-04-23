@@ -5,8 +5,8 @@ Sistema SaaS multi-tenant para gestão de clientes, projetos, tarefas, financeir
 ## Stack
 - PHP 8.1+
 - MariaDB 10.6+
-- Composer 2+
-- Node.js 18+ (build de assets)
+- Composer 2+ local
+- Node.js 18+ somente para build local de assets
 - TypeScript + Tailwind
 
 ## Setup local rápido
@@ -56,6 +56,7 @@ composer package-hostinger
 
 Documentação específica:
 - `docs/hostinger-shared-hosting-deploy.md`
+- `config/config.php` pode ser usado como fallback ao `.env`
 
 7. Acessar:
 - Login: `http://127.0.0.1:8000/login`
@@ -94,6 +95,7 @@ git push -u origin develop
 ## Segurança e segredos
 - Nunca versionar `.env` real.
 - Usar somente `.env.example` com placeholders.
+- Para hospedagem compartilhada sem leitura confiável do `.env`, usar `config/config.php` fora do público.
 - Rotacionar credenciais em produção.
 - Configurar HTTPS obrigatório.
 

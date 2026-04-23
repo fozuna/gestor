@@ -1,10 +1,11 @@
 <?php
 use App\Helpers\Config;
+use App\Helpers\Path;
 
 $app = Config::get('app');
 $title = $title ?? $app['name'];
 $content = $content ?? '';
-$publicPath = dirname(__DIR__, 3) . '/public/assets';
+$publicPath = Path::public('assets');
 $appCssVersion = is_file($publicPath . '/app.css') ? (string)filemtime($publicPath . '/app.css') : '1';
 $appJsVersion = is_file($publicPath . '/app.js') ? (string)filemtime($publicPath . '/app.js') : '1';
 ?>

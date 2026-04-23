@@ -3,11 +3,13 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Helpers\Path;
+
 final class BackupService
 {
     public function storeFinancialSnapshot(int $tenantId, string $context, array $payload): string
     {
-        $baseDir = dirname(__DIR__, 2) . '/storage/backups/' . date('Ymd');
+        $baseDir = Path::storage('backups/' . date('Ymd'));
         if (!is_dir($baseDir)) {
             mkdir($baseDir, 0775, true);
         }
