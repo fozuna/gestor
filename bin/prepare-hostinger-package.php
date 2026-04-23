@@ -10,6 +10,8 @@ $requiredPaths = [
     $root . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php' => 'Execute `composer install --no-dev --optimize-autoloader` localmente antes de gerar o pacote.',
     $root . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'app.css' => 'Execute `npm run build` localmente antes de gerar o pacote.',
     $root . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'app.js' => 'Execute `npm run build` localmente antes de gerar o pacote.',
+    $root . DIRECTORY_SEPARATOR . 'public_html' . DIRECTORY_SEPARATOR . 'index.php' => 'O diretório `public_html` precisa existir no repositório para o deploy compartilhado.',
+    $root . DIRECTORY_SEPARATOR . 'public_html' . DIRECTORY_SEPARATOR . '.htaccess' => 'O diretório `public_html` precisa conter `.htaccess` válido para Apache/Hostinger.',
 ];
 
 foreach ($requiredPaths as $path => $message) {
@@ -44,17 +46,9 @@ foreach ($privateItems as $item) {
     copyPath($root . DIRECTORY_SEPARATOR . $item, $privateRoot . DIRECTORY_SEPARATOR . $item);
 }
 
+copyPath($root . DIRECTORY_SEPARATOR . 'public_html' . DIRECTORY_SEPARATOR . 'index.php', $publicHtmlRoot . DIRECTORY_SEPARATOR . 'index.php');
+copyPath($root . DIRECTORY_SEPARATOR . 'public_html' . DIRECTORY_SEPARATOR . '.htaccess', $publicHtmlRoot . DIRECTORY_SEPARATOR . '.htaccess');
 copyPath($root . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'assets', $publicHtmlRoot . DIRECTORY_SEPARATOR . 'assets');
-copyPath($root . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . '.htaccess', $publicHtmlRoot . DIRECTORY_SEPARATOR . '.htaccess');
-
-$publicIndex = <<<'PHP'
-<?php
-declare(strict_types=1);
-
-require __DIR__ . '/../private/public/index.php';
-PHP;
-
-file_put_contents($publicHtmlRoot . DIRECTORY_SEPARATOR . 'index.php', $publicIndex . PHP_EOL);
 
 $readme = <<<'TXT'
 Pacote pronto para Hostinger (hospedagem compartilhada)

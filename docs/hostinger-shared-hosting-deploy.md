@@ -97,6 +97,11 @@ private/
   composer.lock
 ```
 
+## Estrutura publica no repositório
+- O projeto agora versiona `public_html/index.php` e `public_html/.htaccess`.
+- Esses arquivos servem como base publica padronizada para Apache/Hostinger.
+- O empacotador reaproveita exatamente essa estrutura ao gerar `build/hostinger-upload/public_html`.
+
 ## Gerar pacote local
 ### Pré-requisitos locais
 - `composer install --no-dev --optimize-autoloader`

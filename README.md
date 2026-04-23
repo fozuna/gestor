@@ -58,6 +58,7 @@ Documentação específica:
 - `docs/hostinger-shared-hosting-deploy.md`
 - `config/config.php.local` e `config/config.php.production` definem defaults por ambiente
 - `config/config.php` pode ser criado como override local e fica fora do Git
+- `public_html/index.php` e `public_html/.htaccess` são versionados como base pública de deploy
 
 7. Acessar:
 - Login: `http://127.0.0.1:8000/login`
