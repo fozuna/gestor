@@ -26,6 +26,7 @@
     "verify-db": "php bin/setup.php --no-env --no-lock",
     "migrate-db": "php bin/migrate.php",
     "backup-db": "php bin/backup.php",
+    "check-prod": "php bin/check-production-readiness.php",
     "package-hostinger": "php bin/prepare-hostinger-package.php",
     "test": "phpunit --configuration phpunit.xml"
   },

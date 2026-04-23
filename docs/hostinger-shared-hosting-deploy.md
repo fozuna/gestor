@@ -20,9 +20,17 @@
   - bloqueio de arquivos sensíveis
 - `public/.htaccess` com front controller padrão.
 - Fallback do recibo para `Dompdf` quando não houver Node/Chrome no servidor.
+- O detector de instalação agora não depende só de `storage/installed.lock`:
+  - se existir `.env` válido
+  - se o banco responder
+  - se as tabelas-base existirem
+  - o sistema considera a aplicação instalada e recria o lock automaticamente quando possível
 - Script local de empacotamento para gerar pacote pronto de upload:
   - `php bin/prepare-hostinger-package.php`
   - ou `composer package-hostinger`
+- Script de diagnóstico de produção:
+  - `php bin/check-production-readiness.php`
+  - ou `composer check-prod`
 
 ## Estrutura final de upload
 ```text
@@ -145,6 +153,7 @@ RECEIPT_PDF_RENDERER=dompdf
 - `private/.env` existe e está correto.
 - Permissões `755` em pastas e `644` em arquivos.
 - `private/storage` tem escrita.
+- `composer check-prod` retorna `OK` para `.env`, banco e installer.
 - Navegação abre sem `403`.
 - Rotas funcionam.
 - CSS e JS carregam sem `404`.
