@@ -166,6 +166,49 @@ sudo apache2ctl configtest
 sudo systemctl reload apache2
 ```
 
+## 6.1) Hostinger / `public_html`
+- Em hospedagem compartilhada da Hostinger, o domínio normalmente serve a pasta `public_html`.
+- Este repositório agora suporta deploy direto dentro de `public_html` com:
+  - `.htaccess` na raiz do projeto reescrevendo para `public/`
+  - `index.php` na raiz delegando para `public/index.php`
+  - `public/.htaccess` atuando como front controller padrão
+
+### Estrutura recomendada na Hostinger
+```bash
+/home/uXXXX/domains/gestor.traxter.com.br/public_html
+  |- app/
+  |- bootstrap/
+  |- config/
+  |- public/
+  |   |- index.php
+  |   |- .htaccess
+  |   |- assets/
+  |- storage/
+  |- vendor/
+  |- .env
+  |- .htaccess
+  |- index.php
+```
+
+### Passos mínimos
+```bash
+composer install --no-dev --optimize-autoloader
+npm ci
+npm run build
+php bin/migrate.php
+```
+
+### Causa típica do erro 403
+- O Apache/Hostinger tenta abrir a raiz de `public_html`, mas sem `index.php` e sem rewrite para `public/` o acesso fica negado.
+- Se o projeto foi publicado inteiro dentro de `public_html`, o `.htaccess` da raiz resolve esse cenário automaticamente.
+
+### Checklist Hostinger
+- Confirmar que `mod_rewrite` está habilitado no ambiente Apache da hospedagem.
+- Confirmar que `vendor/` foi instalado com `composer install`.
+- Confirmar que os assets foram gerados em `public/assets` com `npm run build`.
+- Confirmar permissões de escrita em `storage/` para backups e recibos.
+- Confirmar que existe `.env` válido na raiz do projeto dentro de `public_html`.
+
 ## 7) SSL / certificados
 Usando Certbot (Nginx):
 ```bash

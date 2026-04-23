@@ -1,0 +1,26 @@
+Options -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Bloqueia acesso direto a arquivos e diretórios sensíveis quando o projeto
+    # é publicado diretamente dentro de public_html.
+    RewriteRule ^(?:app|bin|bootstrap|config|docs|install|resources|routes|scripts|storage|tests|vendor)(?:/|$) - [F,L,NC]
+    RewriteRule ^(?:\.env(?:\..*)?|composer\.(?:json|lock)|package(?:-lock)?\.json|phpunit\.xml|postcss\.config\.js|tailwind\.config\.js|tsconfig\.json|vite\.config\.ts|README\.md)$ - [F,L,NC]
+    RewriteRule ^(?:\.git|\.gitignore|\.gitattributes|\.htaccess)$ - [F,L,NC]
+
+    # Se o recurso existir dentro de public/, serve o arquivo físico mantendo a URL limpa.
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f [OR]
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -d
+    RewriteRule ^(.*)$ public/$1 [L]
+
+    # Demais requisições entram pelo front controller.
+    RewriteRule ^$ public/index.php [L]
+    RewriteRule !^public/ public/index.php [QSA,L]
+</IfModule>
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
