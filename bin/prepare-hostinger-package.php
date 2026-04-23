@@ -62,7 +62,8 @@ Pacote pronto para Hostinger (hospedagem compartilhada)
 1. Envie a pasta "public_html" para o diretório public_html do subdomínio.
 2. Envie a pasta "private" como irmã de public_html no mesmo nível.
 3. Copie .env.example para private/.env e ajuste as variáveis reais.
-   - Alternativa: edite private/config/config.php se preferir não depender de .env
+   - Sem .env, o bootstrap usa private/config/config.php.production
+   - Para override privado fora do Git, crie private/config/config.php
 4. Defina permissões:
    - pastas: 755
    - arquivos: 644

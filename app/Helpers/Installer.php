@@ -18,9 +18,13 @@ final class Installer
         $lockExists = is_file(self::lockPath());
         $envPath = Path::base('.env');
         $envExists = is_file($envPath);
+        $runtimeConfigSource = (string)(function_exists('runtime_env') ? runtime_env('APP_RUNTIME_CONFIG_SOURCE', '') : '');
+        $runtimeConfigPath = $runtimeConfigSource !== '' ? Path::config($runtimeConfigSource) : '';
+        $runtimeConfigFileExists = $runtimeConfigPath !== '' && is_file($runtimeConfigPath);
         $storageDir = Path::storage();
         $storageWritable = is_dir($storageDir) && is_writable($storageDir);
-        $envConfigured = self::hasConfiguredEnvironment();
+        $runtimeConfig = self::runtimeConfigurationStatus();
+        $envConfigured = (bool)($runtimeConfig['configured'] ?? false);
 
         $database = self::databaseStatus();
         $installed = $lockExists || ($envConfigured && (bool)$database['ok']);
@@ -36,8 +40,11 @@ final class Installer
             'lock_exists' => $lockExists,
             'lock_path' => self::lockPath(),
             'env_exists' => $envExists,
+            'runtime_config_source' => $runtimeConfigSource,
+            'runtime_config_file_exists' => $runtimeConfigFileExists,
             'env_configured' => $envConfigured,
             'storage_writable' => $storageWritable,
+            'runtime_config' => $runtimeConfig,
             'database' => $database,
         ];
     }
@@ -56,19 +63,29 @@ final class Installer
         return Path::storage('installed.lock');
     }
 
-    private static function hasConfiguredEnvironment(): bool
+    private static function runtimeConfigurationStatus(): array
     {
-        $envPath = Path::base('.env');
-        if (!is_file($envPath)) {
-            return false;
-        }
+        $runtimeSource = (string)(function_exists('runtime_env') ? runtime_env('APP_RUNTIME_CONFIG_SOURCE', '') : '');
+        $env = static fn(string $key): string => trim((string)(function_exists('runtime_env')
+            ? runtime_env($key, '')
+            : (getenv($key) ?: '')));
 
-        $dbHost = trim((string)(getenv('DB_HOST') ?: ''));
-        $dbPort = trim((string)(getenv('DB_PORT') ?: ''));
-        $dbName = trim((string)(getenv('DB_DATABASE') ?: ''));
-        $dbUser = trim((string)(getenv('DB_USERNAME') ?: ''));
+        $dbHost = $env('DB_HOST');
+        $dbPort = $env('DB_PORT');
+        $dbName = $env('DB_DATABASE');
+        $dbUser = $env('DB_USERNAME');
 
-        return $dbHost !== '' && $dbPort !== '' && $dbName !== '' && $dbUser !== '';
+        $configured = $dbHost !== '' && $dbPort !== '' && $dbName !== '' && $dbUser !== '';
+        $source = is_file(Path::base('.env')) ? '.env' : ($runtimeSource !== '' ? $runtimeSource : 'none');
+
+        return [
+            'configured' => $configured,
+            'source' => $source,
+            'db_host' => $dbHost !== '',
+            'db_port' => $dbPort !== '',
+            'db_database' => $dbName !== '',
+            'db_username' => $dbUser !== '',
+        ];
     }
 
     private static function databaseStatus(): array
@@ -128,11 +145,12 @@ final class Installer
         if ($lockExists) {
             return 'lock';
         }
-        if (!$envExists) {
-            return 'missing_env_file';
+        $runtimeConfigSource = (string)(function_exists('runtime_env') ? runtime_env('APP_RUNTIME_CONFIG_SOURCE', '') : '');
+        if (!$envExists && $runtimeConfigSource === '') {
+            return 'missing_runtime_config';
         }
         if (!$envConfigured) {
-            return 'incomplete_env';
+            return 'incomplete_runtime_config';
         }
         if (!$databaseOk) {
             return 'database_not_ready';

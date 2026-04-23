@@ -24,6 +24,7 @@
 /.env.test
 /.env.backup
 /.env.bak
+/config/config.php
 
 # =========================
 # Logs e cache
@@ -69,4 +70,3 @@ Desktop.ini
 # Docker temporário
 # =========================
 docker-compose.override.yml
-

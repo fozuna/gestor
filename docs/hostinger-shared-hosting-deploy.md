@@ -44,7 +44,9 @@
 - Geração de recibos padronizada em `Dompdf`, sem `proc_open`, Node, Chrome ou binários do sistema.
 - Bootstrap central em `bootstrap/runtime.php` com suporte a:
   - `.env`
-  - fallback via `config/config.php`
+  - `config/config.php.local`
+  - `config/config.php.production`
+  - override privado opcional via `config/config.php`
   - timezone e paths centrais
 - O detector de instalação agora não depende só de `storage/installed.lock`:
   - se existir `.env` válido
@@ -68,11 +70,12 @@ public_html/
     app.js
 
 private/
-  config/
-    app.php
-    config.php
-    database.php
-    session.php
+    config/
+      app.php
+      config.php.local
+      config.php.production
+      database.php
+      session.php
   .env
   .env.example
   app/
@@ -169,8 +172,11 @@ RECEIPT_PDF_RENDERER=dompdf
 ```
 
 ## Alternativa sem `.env`
-- Se a hospedagem falhar ao carregar `.env`, editar `private/config/config.php`.
-- O bootstrap usa `config/config.php` para preencher valores ausentes de:
+- Se a hospedagem falhar ao carregar `.env`, o bootstrap escolhe automaticamente:
+  - `private/config/config.php.local` em ambiente local
+  - `private/config/config.php.production` em produção
+- Se precisar de credenciais privadas fora do Git, crie `private/config/config.php`.
+- O bootstrap usa a configuração do ambiente para preencher valores ausentes de:
   - `APP_ENV`
   - `APP_URL`
   - `APP_KEY`
@@ -196,7 +202,7 @@ RECEIPT_PDF_RENDERER=dompdf
 - `public_html/.htaccess` existe.
 - `public_html/assets/app.css` e `public_html/assets/app.js` existem.
 - `private/vendor/autoload.php` existe.
-- `private/.env` existe e está correto.
+- `private/.env` existe e está correto, ou os valores necessários estão em `private/config/config.php`.
 - Permissões `755` em pastas e `644` em arquivos.
 - `private/storage` tem escrita.
 - `composer check-prod` retorna `OK` para `.env`, banco e installer.

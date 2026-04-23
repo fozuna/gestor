@@ -31,6 +31,11 @@ foreach ($checks as [$label, $ok]) {
 
 echo 'installer reason: ' . (string)($status['reason'] ?? 'unknown') . PHP_EOL;
 
+$runtimeConfig = is_array($status['runtime_config'] ?? null) ? $status['runtime_config'] : [];
+if ($runtimeConfig !== []) {
+    echo 'runtime config source: ' . (string)($runtimeConfig['source'] ?? 'unknown') . PHP_EOL;
+}
+
 $database = is_array($status['database'] ?? null) ? $status['database'] : [];
 if (($database['error'] ?? null) !== null) {
     echo 'database error: ' . (string)$database['error'] . PHP_EOL;

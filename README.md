@@ -56,7 +56,8 @@ composer package-hostinger
 
 Documentação específica:
 - `docs/hostinger-shared-hosting-deploy.md`
-- `config/config.php` pode ser usado como fallback ao `.env`
+- `config/config.php.local` e `config/config.php.production` definem defaults por ambiente
+- `config/config.php` pode ser criado como override local e fica fora do Git
 
 7. Acessar:
 - Login: `http://127.0.0.1:8000/login`
@@ -95,7 +96,8 @@ git push -u origin develop
 ## Segurança e segredos
 - Nunca versionar `.env` real.
 - Usar somente `.env.example` com placeholders.
-- Para hospedagem compartilhada sem leitura confiável do `.env`, usar `config/config.php` fora do público.
+- `config/config.php` é override local ignorado pelo Git.
+- Para hospedagem compartilhada sem leitura confiável do `.env`, usar os arquivos `config.php.production` e, se necessário, um `config/config.php` privado.
 - Rotacionar credenciais em produção.
 - Configurar HTTPS obrigatório.
 
