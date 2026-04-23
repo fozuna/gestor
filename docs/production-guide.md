@@ -49,11 +49,39 @@ DB_PASSWORD=senha_forte
 SESSION_NAME=traxter_session
 SESSION_SECURE=true
 SESSION_SAMESITE=Lax
+APP_TIMEZONE=America/Campo_Grande
 ```
 
 ### Validação
 ```bash
 php -r "require 'bootstrap/app.php'; echo getenv('APP_ENV') ?: 'missing';"
+```
+
+## 3.1) Timezone de aplicação e PHP
+- Timezone padrão da aplicação: `America/Campo_Grande` (GMT-4) via `bootstrap/app.php`.
+- Variável de ambiente: `APP_TIMEZONE=America/Campo_Grande`.
+
+### Ajuste no `php.ini` (produção)
+Editar o `php.ini` carregado pelo FPM/Apache:
+```bash
+php -i | grep "Loaded Configuration File"
+```
+
+Definir:
+```ini
+date.timezone = America/Campo_Grande
+```
+
+Reiniciar serviços:
+```bash
+sudo systemctl restart php8.2-fpm
+sudo systemctl restart nginx
+```
+
+Validação:
+```bash
+php -r "echo date_default_timezone_get(), PHP_EOL;"
+php -r "require 'bootstrap/app.php'; echo date('c'), PHP_EOL;"
 ```
 
 ## 4) Setup de banco de dados

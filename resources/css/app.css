@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html.dark body {
+  background: #09090b;
+}
+
+/* Estado visual de cards de tarefas */
+.task-card {
+  color: #111827;
+  transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.task-card--done {
+  background-color: #90EE90;
+  border-color: #5ecb5e;
+  border-left-width: 4px;
+  border-left-style: solid;
+  border-left-color: #22c55e;
+}
+
+.task-card--pending {
+  background-color: #FFFFFF;
+  border-color: #b8dcff;
+  border-left-width: 4px;
+  border-left-style: dashed;
+  border-left-color: #60a5fa;
+}
+
+html.dark .task-card {
+  color: #e5e7eb;
+}
+
+html.dark .task-card--done {
+  background-color: #14532d;
+  border-color: #15803d;
+  border-left-color: #22c55e;
+}
+
+html.dark .task-card--pending {
+  background-color: #1e3a5f;
+  border-color: #1d4ed8;
+  border-left-color: #60a5fa;
+}
