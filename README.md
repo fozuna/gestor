@@ -47,6 +47,16 @@ composer migrate-db
 php -S 127.0.0.1:8000 -t public
 ```
 
+## Pacote para Hostinger
+Gerar pacote local pronto para upload manual em hospedagem compartilhada:
+
+```bash
+composer package-hostinger
+```
+
+Documentação específica:
+- `docs/hostinger-shared-hosting-deploy.md`
+
 7. Acessar:
 - Login: `http://127.0.0.1:8000/login`
 - Instalador web: `http://127.0.0.1:8000/install`
@@ -92,3 +102,4 @@ git push -u origin develop
 - Módulo orçamentos: `docs/orcamentos-modulo.md`
 - Gestão de logos: `docs/logo-management.md`
 - Guia completo de produção: `docs/production-guide.md`
+- Deploy Hostinger compartilhado: `docs/hostinger-shared-hosting-deploy.md`

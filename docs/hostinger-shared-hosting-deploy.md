@@ -1,0 +1,154 @@
+# Deploy Hostinger Shared Hosting
+
+## Objetivo
+- Corrigir `403 Forbidden` em hospedagem compartilhada Hostinger.
+- Rodar a aplicação em subdomínio com `public_html` como raiz pública.
+- Evitar dependência de `npm` e `composer` no servidor.
+
+## O que causava o 403
+- O projeto foi desenvolvido para iniciar por `public/index.php`.
+- Na Hostinger, o subdomínio costuma servir diretamente `public_html`.
+- Sem `index.php` e sem regras de rewrite adequadas na raiz pública, o Apache tenta abrir diretório ou bloqueia o acesso.
+- Regras faltantes ou incorretas no `.htaccess` também podem provocar `403`.
+
+## Solução aplicada
+- `index.php` na raiz para fallback quando o projeto inteiro fica dentro de `public_html`.
+- `.htaccess` na raiz com:
+  - `DirectoryIndex`
+  - `mod_rewrite`
+  - fallback para `public/index.php`
+  - bloqueio de arquivos sensíveis
+- `public/.htaccess` com front controller padrão.
+- Fallback do recibo para `Dompdf` quando não houver Node/Chrome no servidor.
+- Script local de empacotamento para gerar pacote pronto de upload:
+  - `php bin/prepare-hostinger-package.php`
+  - ou `composer package-hostinger`
+
+## Estrutura final de upload
+```text
+public_html/
+  .htaccess
+  index.php
+  assets/
+    app.css
+    app.js
+
+private/
+  .env
+  .env.example
+  app/
+  bin/
+  bootstrap/
+  config/
+  install/
+  public/
+    index.php
+    .htaccess
+    assets/
+      app.css
+      app.js
+  resources/
+  routes/
+  scripts/
+  storage/
+  vendor/
+  composer.json
+  composer.lock
+```
+
+## Gerar pacote local
+### Pré-requisitos locais
+- `composer install --no-dev --optimize-autoloader`
+- `npm install`
+- `npm run build`
+
+### Gerar pacote
+```bash
+composer package-hostinger
+```
+
+Saída:
+```text
+build/hostinger-upload/
+  README-HOSTINGER.txt
+  public_html/
+  private/
+```
+
+## Upload manual
+### Via FTP ou File Manager
+1. Apague ou mova o conteúdo antigo do subdomínio.
+2. Envie `build/hostinger-upload/public_html/*` para a pasta `public_html` do subdomínio.
+3. Envie `build/hostinger-upload/private/*` para uma pasta `private` no mesmo nível de `public_html`.
+4. Crie `private/.env` a partir de `private/.env.example`.
+5. Ajuste as variáveis reais de banco, URL e sessão.
+
+## Permissões
+- Diretórios: `755`
+- Arquivos: `644`
+- Garantir escrita em:
+  - `private/storage/`
+  - `private/storage/backups/`
+  - `private/storage/recibos/`
+
+## .htaccess pronto para uso
+### `public_html/.htaccess`
+```apache
+Options -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+```
+
+## index.php público
+### `public_html/index.php`
+```php
+<?php
+declare(strict_types=1);
+
+require __DIR__ . '/../private/public/index.php';
+```
+
+## Configuração recomendada de ambiente
+```dotenv
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://gestor.traxter.com.br
+SESSION_SECURE=true
+RECEIPT_PDF_RENDERER=dompdf
+```
+
+## Sem npm/composer no servidor
+- O pacote final já leva:
+  - `vendor/`
+  - `public_html/assets/`
+  - `private/public/assets/`
+- Isso elimina dependência de build e instalação de dependências via SSH.
+
+## Checklist final
+- `public_html/index.php` existe.
+- `public_html/.htaccess` existe.
+- `public_html/assets/app.css` e `public_html/assets/app.js` existem.
+- `private/vendor/autoload.php` existe.
+- `private/.env` existe e está correto.
+- Permissões `755` em pastas e `644` em arquivos.
+- `private/storage` tem escrita.
+- Navegação abre sem `403`.
+- Rotas funcionam.
+- CSS e JS carregam sem `404`.
+
+## Observações
+- Logos em `public/assets/images` são opcionais; se não existirem, o sistema usa fallback SVG.
+- Recibos PDF agora podem usar `Dompdf` por configuração, evitando dependência de Node/Chrome na hospedagem compartilhada.
